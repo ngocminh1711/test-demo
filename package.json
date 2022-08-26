@@ -1,0 +1,11 @@
+{
+  "devDependencies": {
+    "@types/node": "^18.7.13"
+  },
+  "scripts": {
+    "dev": "nodemon app.js"
+  },
+  "dependencies": {
+    "nodemon": "^2.0.19"
+  }
+}
