@@ -35,9 +35,15 @@ const server = http.createServer((req, res) => {
     else {
         switch (urlPath) {
             case '/':
-                controller.showLogin(req, res).catch(function (error) {
-                    throw new Error(error.message)
-                });
+                if (req.method === 'GET') {
+                    controller.showFormLogin(req, res);
+                }
+                else {
+                    controller.login(req, res);
+                }
+
+
+
                 break;
             case '/signup':
                 controller.showSignUp(req, res);
@@ -49,6 +55,11 @@ const server = http.createServer((req, res) => {
                 break;
             case '/deleteUser':
                 controller.deleteUser(req, res).catch(function (error) {
+                    throw new Error(error.message);
+                })
+                break;
+            case '/admin/search':
+                controller.searchUser(req, res).catch(function (error) {
                     throw new Error(error.message);
                 })
                 break;
