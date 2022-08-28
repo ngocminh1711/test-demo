@@ -6,6 +6,8 @@
     "dev": "nodemon app.js"
   },
   "dependencies": {
-    "nodemon": "^2.0.19"
+    "mysql": "^2.18.1",
+    "nodemon": "^2.0.19",
+    "qs": "^6.11.0"
   }
 }
