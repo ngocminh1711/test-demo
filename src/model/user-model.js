@@ -4,9 +4,9 @@ const BaseModel = require("./base-model");
 class UserModel extends BaseModel {
 
 
-    async createNewUser(username, password) {
-        const sql = `INSERT INTO users (userName, password)
-                     VALUES ('${username}', '${password}');`
+    async createNewUser(username, password, fullname, email, phone, city, state) {
+        const sql = `INSERT INTO users (username, password, fullname, email, phone, city, state)
+                     VALUES ('${username}', '${password}','${fullname}', '${email}','${phone}', '${city}', '${state}');`
         return await this.querySQL(sql);
     }
     async getAllUser() {

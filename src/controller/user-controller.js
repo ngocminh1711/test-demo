@@ -24,6 +24,11 @@ class UserController {
                 html += `<td>${index + 1}</td>`;
                 html += `<td>${user.userName}</td>`;
                 html += `<td>${user.password}</td>`;
+                html += `<td>${user.fullname}</td>`;
+                html += `<td>${user.email}</td>`;
+                html += `<td>${user.phone}</td>`;
+                html += `<td>${user.city}</td>`;
+                html += `<td>${user.state}</td>`;
                 html += `<td><a href="/deleteUser?index=${user.id}" class="btn btn-danger">Delete</a></td>`;
                 html += `<td><a href="/updateUser?index=${user.id}" class="btn btn-primary">Update</a></td>`;
                 html += `<tr>`
@@ -58,6 +63,7 @@ class UserController {
         req.on('end', async () => {
             let users = qs.parse(data);
             let userDB = await this.userModel.findUser(users);
+            console.log(userDB[0].role);
 
 
             // // tạo cookie cho đăng nhập
@@ -66,8 +72,8 @@ class UserController {
             // // gửi cookie tới server
             // res.setHeader('Set-Cookie', setCookie);
 
-
-            if (userDB.length > 0) {
+            // Đăng nhập:
+            if (userDB.length > 0  && userDB[0].role == 0) {
                 res.writeHead(301, {'Location': '/admin'});
                 return res.end();
             } else {
@@ -94,8 +100,13 @@ class UserController {
             let user = qs.parse(data);
             let username = user.username;
             let password = user.password;
-            await this.userModel.createNewUser(username, password);
-            res.writeHead(301, {'Location': '/admin'})
+            let fullname = user.fullname;
+            let email = user.email;
+            let phone = user.phone;
+            let city = user.city;
+            let state = user.state;
+            await this.userModel.createNewUser(username, password, fullname, email, phone, city, state);
+            res.writeHead(301, {'Location': '/'})
             res.end();
         });
     }
@@ -111,7 +122,7 @@ class UserController {
     async searchUser(req, res) {
         let keyword = qs.parse(url.parse(req.url).query).keyword;
         let users = await this.userModel.searchUserByName(keyword);
-        console.log(users)
+        // console.log(users)
         let html = '';
         if (users.length > 0) {
             users.forEach((user, index) => {
@@ -119,6 +130,11 @@ class UserController {
                 html += `<td>${index + 1}</td>`;
                 html += `<td>${user.userName}</td>`;
                 html += `<td>${user.password}</td>`;
+                html += `<td>${user.fullname}</td>`;
+                html += `<td>${user.email}</td>`;
+                html += `<td>${user.phone}</td>`;
+                html += `<td>${user.city}</td>`;
+                html += `<td>${user.state}</td>`;
                 html += `<td><a href="/deleteUser?index=${user.id}" class="btn btn-danger">Delete</a></td>`;
                 html += `<td><a href="/updateUser?index=${user.id}" class="btn btn-primary">Update</a></td>`;
                 html += `<tr>`
