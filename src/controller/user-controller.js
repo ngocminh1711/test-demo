@@ -34,7 +34,7 @@ class UserController {
         })
     }
 
-    async showFormLogin(req, res) {
+    showFormLogin(req, res) {
         // get cookie from  header request
         //     let cookies = cookie.parse(req.headers.cookie);
         //     console.log(cookies);
@@ -55,7 +55,7 @@ class UserController {
         req.on('data', chunk =>  data += chunk )
         req.on('end', async () => {
             let users = qs.parse(data);
-            let userDB = await this.userModel.findUser(users);
+            let userDB = await this.userModel.CheckUser(users);
 
 
             // // tạo cookie cho đăng nhập

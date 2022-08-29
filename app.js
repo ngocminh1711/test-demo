@@ -3,20 +3,22 @@ const fs = require('fs');
 const PORT = 8000;
 const url = require('url');
 const Controller = require('./src/controller/user-controller')
+const ProductController = require('./src/controller/product-controller')
 
 
 // khởi tạo đối tượng Controller
+let productController = new ProductController();
 let controller = new Controller();
-let mimeTypes={
-    'jpg' : 'images/jpg',
-    'png' : 'images/png',
-    'js' :'text/javascript',
-    'css' : 'text/css',
-    'svg':'image/svg+xml',
-    'ttf':'font/ttf',
-    'woff':'font/woff',
-    'woff2':'font/woff2',
-    'eot':'application/vnd.ms-fontobject'
+let mimeTypes = {
+    'jpg': 'images/jpg',
+    'png': 'images/png',
+    'js': 'text/javascript',
+    'css': 'text/css',
+    'svg': 'image/svg+xml',
+    'ttf': 'font/ttf',
+    'woff': 'font/woff',
+    'woff2': 'font/woff2',
+    'eot': 'application/vnd.ms-fontobject'
 }
 
 const server = http.createServer((req, res) => {
@@ -31,18 +33,14 @@ const server = http.createServer((req, res) => {
         res.writeHead(200, {'Content-Type': extension});
         fs.createReadStream(__dirname + req.url).pipe(res);
         // console.log(extension);
-    }
-    else {
+    } else {
         switch (urlPath) {
             case '/':
                 if (req.method === 'GET') {
                     controller.showFormLogin(req, res);
-                }
-                else {
+                } else {
                     controller.login(req, res);
                 }
-
-
 
                 break;
             case '/signup':
@@ -63,12 +61,29 @@ const server = http.createServer((req, res) => {
                     throw new Error(error.message);
                 })
                 break;
+            case '/product':
+
+                productController.showProduct(req, res).catch(function (error) {
+                    throw new Error(error.message);
+                })
+                break;
+            case '/product/search':
+
+                productController.searchProduct(req, res).catch(function (error) {
+                    throw new Error(error.message);
+                })
+                break;
+            case '/deleteProduct':
+                productController.deleteProduct(req, res).catch(function (error) {
+                    throw new Error(error.message);
+                })
+                break;
             default:
                 res.end();
         }
     }
 
 })
-server.listen(PORT,  () => {
+server.listen(PORT, () => {
     console.log(` http://localhost:${PORT}`);
-})
+});
