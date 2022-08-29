@@ -13,13 +13,13 @@ class UserController {
     }
 
     async showAdmin(req, res) {
-        let users = await this.userModel.getAllUser();
+        let dataUsers = await this.userModel.getAllUser();
         fs.readFile('./views/admin.html', 'utf-8', function (err, data) {
             if (err) {
                 console.log(err.message);
             }
             let html = '';
-            users.forEach((user, index) => {
+            dataUsers.forEach((user, index) => {
                 html += `<tr>`
                 html += `<td>${index + 1}</td>`;
                 html += `<td>${user.userName}</td>`;
@@ -63,8 +63,6 @@ class UserController {
         req.on('end', async () => {
             let users = qs.parse(data);
             let userDB = await this.userModel.findUser(users);
-            console.log(userDB[0].role);
-
 
             // // tạo cookie cho đăng nhập
             // const setCookie = serialize('user', JSON.stringify(users))
@@ -73,7 +71,7 @@ class UserController {
             // res.setHeader('Set-Cookie', setCookie);
 
             // Đăng nhập:
-            if (userDB.length > 0  && userDB[0].role == 0) {
+            if (userDB.length > 0) {
                 res.writeHead(301, {'Location': '/admin'});
                 return res.end();
             } else {
@@ -113,7 +111,7 @@ class UserController {
 
     async deleteUser(req, res) {
         let index = qs.parse(url.parse(req.url).query).index;
-        // console.log(index);
+
         await this.userModel.deleteUser(index);
         res.writeHead(301, {'Location': '/admin'});
         res.end();
@@ -122,7 +120,7 @@ class UserController {
     async searchUser(req, res) {
         let keyword = qs.parse(url.parse(req.url).query).keyword;
         let users = await this.userModel.searchUserByName(keyword);
-        // console.log(users)
+
         let html = '';
         if (users.length > 0) {
             users.forEach((user, index) => {
@@ -155,28 +153,32 @@ class UserController {
             res.end();
         })
     }
-
-  showFormUpdateUser(req, res) {
-            fs.readFile('./views/updateUser.html', 'utf-8', function (err, data) {
-                if (err) {
-                    throw new Error(err.message);
-                }
-                res.writeHead(200, {'Content-Type': 'text/html'});
-                res.write(data);
-                res.end();
-            })
-        }
-    updateUser(req, res) {
-        let index = qs.parse(url.parse(req.url).query).index;
-        let data ='';
-        req.on ('data', chunk => data += chunk )
-        req.on ('end', async () => {
-            let user = qs.parse(data);
-            await this.userModel.updateUser(user, index);
-            res.writeHead(301, {'Location': '/admin'});
+    showFormUpdate (req, res) {
+        fs.readFile('./views/updateUser.html','utf-8', function(err, data) {
+            if (err) {
+                throw new Error(err.message);
+            }
+            res.writeHead(200, {'Content-Type': 'text/html'});
+            res.write(data);
             res.end();
         })
-}
+    }
+    updateUser(req, res) {
+        let index = qs.parse(url.parse(req.url).query).index;
+        console.log(index);
+        let data = '';
+        req.on('data', function(chunk) {
+            data += chunk;
+        })
+        req.on('end',async() => {
+            let user = qs.parse(data);
+            console.log(user);
+            await this.userModel.editUser(user,index);
+            res.writeHead(301,{'Location': '/admin'});
+            res.end();
+        })
+    }
+
 }
 
 module.exports = UserController;
