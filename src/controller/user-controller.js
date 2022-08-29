@@ -36,10 +36,10 @@ class UserController {
 
     async showFormLogin(req, res) {
         // get cookie from  header request
-            let cookies = cookie.parse(req.headers.cookie);
-            console.log(cookies);
-        let cookieUserLogin = cookies.user;
-            // console.log(cookieUserLogin)
+        //     let cookies = cookie.parse(req.headers.cookie);
+        //     console.log(cookies);
+        // let cookieUserLogin = cookies.user;
+        //     // console.log(cookieUserLogin)
 
             fs.readFile('./views/index.html', 'utf-8', function (err, data) {
                 if (err) {
@@ -57,12 +57,12 @@ class UserController {
             let users = qs.parse(data);
             let userDB = await this.userModel.findUser(users);
 
-            // tạo cookie cho đăng nhập
-            const setCookie = serialize('user', JSON.stringify(users))
-            console.log(setCookie)
-            // gửi cookie tới server
-            res.setHeader('Set-Cookie', setCookie);
 
+            // // tạo cookie cho đăng nhập
+            // const setCookie = serialize('user', JSON.stringify(users))
+            // console.log(setCookie)
+            // // gửi cookie tới server
+            // res.setHeader('Set-Cookie', setCookie);
 
 
             if (userDB.length > 0) {
