@@ -44,7 +44,13 @@ const server = http.createServer((req, res) => {
 
                 break;
             case '/signup':
-                controller.showSignUp(req, res);
+                if (req.method === 'GET') {
+                    controller.showSignUp(req, res);
+                }
+                else {
+                    controller.createUser(req, res);
+                }
+
                 break;
             case '/admin':
                 controller.showAdmin(req, res).catch(function (error) {
@@ -61,6 +67,7 @@ const server = http.createServer((req, res) => {
                     throw new Error(error.message);
                 })
                 break;
+
             case '/product':
 
                 productController.showProduct(req, res).catch(function (error) {
@@ -77,6 +84,13 @@ const server = http.createServer((req, res) => {
                 productController.deleteProduct(req, res).catch(function (error) {
                     throw new Error(error.message);
                 })
+
+            case '/updateUser':
+                if (req.method === 'GET') {
+                    controller.showFormUpdateUser(req, res)
+                }
+                   controller.updateUser(req, res);
+
                 break;
             default:
                 res.end();
