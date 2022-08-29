@@ -74,6 +74,9 @@ const server = http.createServer((req, res) => {
                     controller.updateUser(req, res);
                 }
                 break;
+            case '/homepage':
+                controller.showHomePage(req, res);
+                break;
             default:
                 res.end();
         }
