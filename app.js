@@ -77,6 +77,14 @@ const server = http.createServer((req, res) => {
             case '/homepage':
                 controller.showHomePage(req, res);
                 break;
+            case '/product-test':
+                if (req.method === 'GET') {
+                    controller.showFormUpdate(req, res);
+                }
+                else {
+                    controller.editProduct(req, res);
+                }
+                break;
             default:
                 res.end();
         }
