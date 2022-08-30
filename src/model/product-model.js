@@ -32,7 +32,24 @@ class ProductModel extends BaseModel {
         return await this.querySQL(sql);
     }
 
-
+    async getMenShirtProducts() {
+        const sql = `SELECT *
+                     FROM products
+                     WHERE productCode like '%ANA%'`;
+        return await this.querySQL(sql);
+    }
+    async getMenPantsProducts() {
+        const sql = `SELECT *
+                     FROM products
+                     WHERE productCode like '%QNA%'`;
+        return await this.querySQL(sql);
+    }
+    async getWomenPantsProducts(){
+        const sql = `SELECT *
+                     FROM products
+                     WHERE productCode like '%QNU%'`;
+        return await this.querySQL(sql);
+    }
 
 }
 module.exports = ProductModel;
