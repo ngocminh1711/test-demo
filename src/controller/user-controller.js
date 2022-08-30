@@ -81,7 +81,7 @@ class UserController {
                 res.writeHead(301, {'Location': '/admin'});
                 return res.end();
             } else {
-                res.writeHead(301, {'Location': '/'});
+                res.writeHead(301, {'Location': '/homepage'});
                 return res.end();
             }
         })
@@ -188,34 +188,12 @@ class UserController {
             if (err) {
                 console.log(err.message);
             }
-            let html='';
-            product.forEach((item,index) => {
-                html +=`<li class="list-group-item">`;
-                html += `<div class="media align-items-lg-center flex-column flex-lg-row p-3">`;
-                html += `<div class="media-body order-2 order-lg-1">`
-                html += `<h5 class="mt-0 font-weight-bold mb-2">${item.productName}</h5>`;
-                html += `<p class="font-italic text-muted mb-0 small">${item.detail}</p>`
-                html += `<div class="d-flex align-items-center justify-content-between mt-1">`
-                html += `<h6 class="font-weight-bold my-2">$ ${item.price}</h6>`;
-                html += `<ul class="list-inline small">`;
-                html += `<li><img src="${item.img}"></li>`
-                html += `<li class="list-inline-item m-0"><i class="fa fa-star text-success"></i></li>`;
-                html += `<li class="list-inline-item m-0"><i class="fa fa-star text-success"></i></li>`;
-                html += `<li class="list-inline-item m-0"><i class="fa fa-star text-success"></i></li>`;
-                html += `<li class="list-inline-item m-0"><i class="fa fa-star text-success"></i></li>`;
-                html += `<li class="list-inline-item m-0"><i class="fa fa-star-o text-gray"></i></li>`;
-                html += `</ul>`;
-                html += `</div>`;
-                html += `</div>`;
-                html += `</div>`;
-                html += `</li>`;
-            });
-            data = data.replace('{list-products-home-page}', html);
             res.writeHead(200, {'Content-Type': 'text/html'});
             res.write(data);
             res.end();
         })
     }
+
 }
 
 module.exports = UserController;

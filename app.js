@@ -111,6 +111,9 @@ const server = http.createServer((req, res) => {
                     productController.createProduct(req, res);
                 }
                 break;
+            case '/aonu':
+                productController.showWomenShirt(req, res);
+                break;
             default:
                 res.end();
         }
@@ -118,5 +121,5 @@ const server = http.createServer((req, res) => {
 
 })
 server.listen(PORT, () => {
-    console.log(` http://localhost:${PORT}`);
+    console.log(` http://localhost:${PORT}/homepage`);
 });
