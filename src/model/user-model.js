@@ -15,7 +15,7 @@ class UserModel extends BaseModel {
     }
 
     async CheckUser(data) {
-       const sql = `SELECT * FROM users WHERE userName = '${data.userName}' AND password = '${data.password}'`;
+       const sql = `SELECT * FROM users WHERE userName = '${data.username}' AND password = '${data.password}'`;
 
    
         return await this.querySQL(sql);
