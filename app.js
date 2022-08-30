@@ -86,11 +86,16 @@ const server = http.createServer((req, res) => {
 
             case '/updateUser':
                 if (req.method === 'GET') {
-                    controller.showFormUpdateUser(req, res)
+                    controller.showFormUpdate(req, res);
                 }
-                controller.updateUser(req, res);
+                else {
+                    controller.updateUser(req, res);
+                }
                 break;
-
+            case '/homepage':
+                controller.showHomePage(req, res);
+                break;
+          
             case '/updateProduct':
                 if (req.method === 'GET') {
                     productController.showFormUpdate(req, res);

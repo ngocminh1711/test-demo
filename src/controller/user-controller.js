@@ -4,30 +4,39 @@ const qs = require('qs');
 const url = require("url");
 const cookie = require('cookie');
 const {serialize} = require("cookie");
+const ProductModel = require("../model/product-model");
 
 class UserController {
     userModel;
-
+    productModel;
     constructor() {
         this.userModel = new UserModel();
+        this.productModel = new ProductModel();
     }
 
     async showAdmin(req, res) {
-        let users = await this.userModel.getAllUser();
+        let dataUsers = await this.userModel.getAllUser();
+
         fs.readFile('./views/admin.html', 'utf-8', function (err, data) {
             if (err) {
                 console.log(err.message);
             }
             let html = '';
-            users.forEach((user, index) => {
+            dataUsers.forEach((user, index) => {
                 html += `<tr>`
                 html += `<td>${index + 1}</td>`;
                 html += `<td>${user.userName}</td>`;
                 html += `<td>${user.password}</td>`;
+                html += `<td>${user.fullname}</td>`;
+                html += `<td>${user.email}</td>`;
+                html += `<td>${user.phone}</td>`;
+                html += `<td>${user.city}</td>`;
+                html += `<td>${user.state}</td>`;
                 html += `<td><a href="/deleteUser?index=${user.id}" class="btn btn-danger">Delete</a></td>`;
                 html += `<td><a href="/updateUser?index=${user.id}" class="btn btn-primary">Update</a></td>`;
                 html += `<tr>`
             })
+
             data = data.replace('{list-users}', html)
             res.writeHead(200, {'Content-Type': 'text/html'})
             res.write(data);
@@ -61,15 +70,14 @@ class UserController {
             let userDB = await this.userModel.CheckUser(users);
             console.log(userDB)
 
-
             // // tạo cookie cho đăng nhập
             // const setCookie = serialize('user', JSON.stringify(users))
             // console.log(setCookie)
             // // gửi cookie tới server
             // res.setHeader('Set-Cookie', setCookie);
 
-
-            if (userDB.length > 0) {
+            // Đăng nhập:
+            if (userDB.length > 0 && userDB[0].role == 0) {
                 res.writeHead(301, {'Location': '/admin'});
                 return res.end();
             } else {
@@ -96,15 +104,20 @@ class UserController {
             let user = qs.parse(data);
             let username = user.username;
             let password = user.password;
-            await this.userModel.createNewUser(username, password);
-            res.writeHead(301, {'Location': '/admin'})
+            let fullname = user.fullname;
+            let email = user.email;
+            let phone = user.phone;
+            let city = user.city;
+            let state = user.state;
+            await this.userModel.createNewUser(username, password, fullname, email, phone, city, state);
+            res.writeHead(301, {'Location': '/'})
             res.end();
         });
     }
 
     async deleteUser(req, res) {
         let index = qs.parse(url.parse(req.url).query).index;
-        // console.log(index);
+
         await this.userModel.deleteUser(index);
         res.writeHead(301, {'Location': '/admin'});
         res.end();
@@ -113,7 +126,7 @@ class UserController {
     async searchUser(req, res) {
         let keyword = qs.parse(url.parse(req.url).query).keyword;
         let users = await this.userModel.searchUserByName(keyword);
-        console.log(users)
+
         let html = '';
         if (users.length > 0) {
             users.forEach((user, index) => {
@@ -121,6 +134,11 @@ class UserController {
                 html += `<td>${index + 1}</td>`;
                 html += `<td>${user.userName}</td>`;
                 html += `<td>${user.password}</td>`;
+                html += `<td>${user.fullname}</td>`;
+                html += `<td>${user.email}</td>`;
+                html += `<td>${user.phone}</td>`;
+                html += `<td>${user.city}</td>`;
+                html += `<td>${user.state}</td>`;
                 html += `<td><a href="/deleteUser?index=${user.id}" class="btn btn-danger">Delete</a></td>`;
                 html += `<td><a href="/updateUser?index=${user.id}" class="btn btn-primary">Update</a></td>`;
                 html += `<tr>`
@@ -141,28 +159,63 @@ class UserController {
             res.end();
         })
     }
-
-  showFormUpdateUser(req, res) {
-            fs.readFile('./views/updateUser.html', 'utf-8', function (err, data) {
-                if (err) {
-                    throw new Error(err.message);
-                }
-                res.writeHead(200, {'Content-Type': 'text/html'});
-                res.write(data);
-                res.end();
-            })
-        }
-    updateUser(req, res) {
-        let index = qs.parse(url.parse(req.url).query).index;
-        let data ='';
-        req.on ('data', chunk => data += chunk )
-        req.on ('end', async () => {
-            let user = qs.parse(data);
-            await this.userModel.updateUser(user, index);
-            res.writeHead(301, {'Location': '/admin'});
+    showFormUpdate (req, res) {
+        fs.readFile('./views/updateUser.html','utf-8', function(err, data) {
+            if (err) {
+                throw new Error(err.message);
+            }
+            res.writeHead(200, {'Content-Type': 'text/html'});
+            res.write(data);
             res.end();
         })
-}
+    }
+    updateUser(req, res) {
+        let index = qs.parse(url.parse(req.url).query).index;
+        let data = '';
+        req.on('data', function(chunk) {
+            data += chunk;
+        })
+        req.on('end',async() => {
+            let user = qs.parse(data);
+            console.log(user);
+            await this.userModel.editUser(user,index);
+            res.writeHead(301,{'Location': '/admin'});
+            res.end();
+        })
+    }
+    async showHomePage(req, res){
+        fs.readFile('./views/home-page.html','utf-8',function(err,data){
+            if (err) {
+                console.log(err.message);
+            }
+            let html='';
+            product.forEach((item,index) => {
+                html +=`<li class="list-group-item">`;
+                html += `<div class="media align-items-lg-center flex-column flex-lg-row p-3">`;
+                html += `<div class="media-body order-2 order-lg-1">`
+                html += `<h5 class="mt-0 font-weight-bold mb-2">${item.productName}</h5>`;
+                html += `<p class="font-italic text-muted mb-0 small">${item.detail}</p>`
+                html += `<div class="d-flex align-items-center justify-content-between mt-1">`
+                html += `<h6 class="font-weight-bold my-2">$ ${item.price}</h6>`;
+                html += `<ul class="list-inline small">`;
+                html += `<li><img src="${item.img}"></li>`
+                html += `<li class="list-inline-item m-0"><i class="fa fa-star text-success"></i></li>`;
+                html += `<li class="list-inline-item m-0"><i class="fa fa-star text-success"></i></li>`;
+                html += `<li class="list-inline-item m-0"><i class="fa fa-star text-success"></i></li>`;
+                html += `<li class="list-inline-item m-0"><i class="fa fa-star text-success"></i></li>`;
+                html += `<li class="list-inline-item m-0"><i class="fa fa-star-o text-gray"></i></li>`;
+                html += `</ul>`;
+                html += `</div>`;
+                html += `</div>`;
+                html += `</div>`;
+                html += `</li>`;
+            });
+            data = data.replace('{list-products-home-page}', html);
+            res.writeHead(200, {'Content-Type': 'text/html'});
+            res.write(data);
+            res.end();
+        })
+    }
 }
 
 module.exports = UserController;
