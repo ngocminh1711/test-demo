@@ -46,8 +46,7 @@ const server = http.createServer((req, res) => {
             case '/signup':
                 if (req.method === 'GET') {
                     controller.showSignUp(req, res);
-                }
-                else {
+                } else {
                     controller.createUser(req, res);
                 }
 
@@ -69,7 +68,6 @@ const server = http.createServer((req, res) => {
                 break;
 
             case '/product':
-
                 productController.showProduct(req, res).catch(function (error) {
                     throw new Error(error.message);
                 })
@@ -84,13 +82,29 @@ const server = http.createServer((req, res) => {
                 productController.deleteProduct(req, res).catch(function (error) {
                     throw new Error(error.message);
                 })
+                break;
 
             case '/updateUser':
                 if (req.method === 'GET') {
                     controller.showFormUpdateUser(req, res)
                 }
-                   controller.updateUser(req, res);
+                controller.updateUser(req, res);
+                break;
 
+            case '/updateProduct':
+                if (req.method === 'GET') {
+                    productController.showFormUpdate(req, res);
+                }
+                else {
+                    productController.editProduct(req, res);
+                }
+                break;
+            case '/createProduct':
+                if (req.method === 'GET') {
+                    productController.showCreateProduct(req, res);
+                } else {
+                    productController.createProduct(req, res);
+                }
                 break;
             default:
                 res.end();

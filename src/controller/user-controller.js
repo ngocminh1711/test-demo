@@ -57,7 +57,9 @@ class UserController {
         req.on('data', chunk => data += chunk)
         req.on('end', async () => {
             let users = qs.parse(data);
+            console.log(users)
             let userDB = await this.userModel.CheckUser(users);
+            console.log(userDB)
 
 
             // // tạo cookie cho đăng nhập
