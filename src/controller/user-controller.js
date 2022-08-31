@@ -17,7 +17,7 @@ class UserController {
     async showAdmin(req, res) {
         let dataUsers = await this.userModel.getAllUser();
 
-        fs.readFile('./views/admin.html', 'utf-8', function (err, data) {
+        fs.readFile('./views/login/admin.html', 'utf-8', function (err, data) {
             if (err) {
                 console.log(err.message);
             }
@@ -29,7 +29,7 @@ class UserController {
                 html += `<td>${user.password}</td>`;
                 html += `<td>${user.fullname}</td>`;
                 html += `<td>${user.email}</td>`;
-                html += `<td>${user.phone}</td>`;
+                html += `<td>0${user.phone}</td>`;
                 html += `<td>${user.city}</td>`;
                 html += `<td>${user.state}</td>`;
                 html += `<td><a href="/deleteUser?index=${user.id}" class="btn btn-danger">Delete</a></td>`;
@@ -51,7 +51,7 @@ class UserController {
         // let cookieUserLogin = cookies.user;
         //     // console.log(cookieUserLogin)
 
-        fs.readFile('./views/index.html', 'utf-8', function (err, data) {
+        fs.readFile('./views/login/index.html', 'utf-8', function (err, data) {
             if (err) {
                 console.log(err);
             }
@@ -88,7 +88,7 @@ class UserController {
     }
 
     showSignUp(req, res) {
-        fs.readFile('./views/sign-up.html', 'utf8', function (err, data) {
+        fs.readFile('./views/login/sign-up.html', 'utf8', function (err, data) {
             if (err) {
                 console.log(err);
             }
@@ -136,7 +136,7 @@ class UserController {
                 html += `<td>${user.password}</td>`;
                 html += `<td>${user.fullname}</td>`;
                 html += `<td>${user.email}</td>`;
-                html += `<td>${user.phone}</td>`;
+                html += `<td>0${user.phone}</td>`;
                 html += `<td>${user.city}</td>`;
                 html += `<td>${user.state}</td>`;
                 html += `<td><a href="/deleteUser?index=${user.id}" class="btn btn-danger">Delete</a></td>`;
@@ -148,7 +148,7 @@ class UserController {
             html += `<td colspan="4" class="text-center">Không có dữ liệu</td>`;
             html += "</tr>";
         }
-        fs.readFile('./views/admin.html', 'utf-8', function (err, data) {
+        fs.readFile('./views/login/admin.html', 'utf-8', function (err, data) {
             if (err) {
                 throw new Error(err.message)
             }
@@ -160,7 +160,7 @@ class UserController {
         })
     }
     showFormUpdate (req, res) {
-        fs.readFile('./views/updateUser.html','utf-8', function(err, data) {
+        fs.readFile('./views/update/updateUser.html','utf-8', function(err, data) {
             if (err) {
                 throw new Error(err.message);
             }
