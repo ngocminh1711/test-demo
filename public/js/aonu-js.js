@@ -5,7 +5,7 @@ let original = window.origin;
 function addToCart(idProduct) {
     // console.log(document.cookie);
     $.ajax({
-        url: original  + "/add-to-cart",
+        url: `${original}/add-to-cart`,
         method: 'POST',
         headers: {
           cookie: document.cookie
