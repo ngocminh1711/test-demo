@@ -87,20 +87,18 @@ const server = http.createServer((req, res) => {
             case '/updateUser':
                 if (req.method === 'GET') {
                     controller.showFormUpdate(req, res);
-                }
-                else {
+                } else {
                     controller.updateUser(req, res);
                 }
                 break;
             case '/homepage':
                 controller.showHomePage(req, res);
                 break;
-          
+
             case '/updateProduct':
                 if (req.method === 'GET') {
                     productController.showFormUpdate(req, res);
-                }
-                else {
+                } else {
                     productController.editProduct(req, res);
                 }
                 break;
@@ -112,7 +110,24 @@ const server = http.createServer((req, res) => {
                 }
                 break;
             case '/aonu':
-                productController.showWomenShirt(req, res);
+                productController.showWomenShirt(req, res).catch(function (err) {
+                    throw new Error(err.message);
+                });
+                break;
+            case '/pageAoNam':
+                productController.showMenShirt(req, res).catch(function (err) {
+                    throw new Error(err.message);
+                });
+                break;
+            case '/pageQuanNam':
+                productController.showMenPants(req, res).catch(function (err) {
+                    throw new Error(err.message);
+                })
+                break;
+                case '/pageQuanNu':
+                    productController.showWomenPants(req, res).catch(function (err) {
+                        throw new Error(err.message);
+                    })
                 break;
             default:
                 res.end();

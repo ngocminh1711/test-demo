@@ -183,7 +183,8 @@ class UserController {
             res.end();
         })
     }
-    async showHomePage(req, res){
+    showHomePage(req, res){
+
         fs.readFile('./views/home-page.html','utf-8',function(err,data){
             if (err) {
                 console.log(err.message);
