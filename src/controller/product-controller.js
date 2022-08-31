@@ -146,6 +146,7 @@ class ProductController {
                                     <li class="list-inline-item m-0"><i class="fa fa-star text-success"></i></li>
                                     <li class="list-inline-item m-0"><i class="fa fa-star text-success"></i></li>
                                 </ul>
+                                <button type="button" class="btn bg-cart"><i class="fa fa-cart-plus mr-2"></i> Add to cart</button>
                             </div>
                         </div>
                         <img src="${item.img}" alt="Generic placeholder image" width="200" class="ml-lg-5 order-1 order-lg-2">
