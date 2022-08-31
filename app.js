@@ -24,7 +24,7 @@ let mimeTypes = {
 const server = http.createServer((req, res) => {
     // lấy pathName
     let urlPath = url.parse(req.url).pathname;
-    // console.log(urlPath);
+
     // lấy tên đuôi file sau chấm để truy vấn đến các js,css,img
     const fileDefences = urlPath.match(/\.js|\.css|\.png|\.svg|\.jpg|\.ttf|\.woff|\.woff2|\.eot/)
 
@@ -32,7 +32,6 @@ const server = http.createServer((req, res) => {
         const extension = mimeTypes[fileDefences[0].toString().split('.')[1]];
         res.writeHead(200, {'Content-Type': extension});
         fs.createReadStream(__dirname + req.url).pipe(res);
-        // console.log(extension);
     } else {
         switch (urlPath) {
             case '/':

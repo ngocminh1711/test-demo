@@ -191,7 +191,6 @@ class ProductController {
                         </div>
                        </li>`;
             });
-            console.log(products);
             data = data.replace('{list-menPants}', html);
             res.writeHead(200, {'Content-Type': 'text/html'});
             res.write(data);
