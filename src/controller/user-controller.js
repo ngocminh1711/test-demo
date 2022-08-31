@@ -66,13 +66,13 @@ class UserController {
         req.on('data', chunk => data += chunk)
         req.on('end', async () => {
             let users = qs.parse(data);
-            console.log(users)
+
             let userDB = await this.userModel.CheckUser(users);
-            console.log(userDB)
+
 
             // // tạo cookie cho đăng nhập
             // const setCookie = serialize('user', JSON.stringify(users))
-            // console.log(setCookie)
+
             // // gửi cookie tới server
             // res.setHeader('Set-Cookie', setCookie);
 
@@ -81,7 +81,7 @@ class UserController {
                 res.writeHead(301, {'Location': '/admin'});
                 return res.end();
             } else {
-                res.writeHead(301, {'Location': '/'});
+                res.writeHead(301, {'Location': '/homepage'});
                 return res.end();
             }
         })
@@ -177,7 +177,6 @@ class UserController {
         })
         req.on('end',async() => {
             let user = qs.parse(data);
-            console.log(user);
             await this.userModel.editUser(user,index);
             res.writeHead(301,{'Location': '/admin'});
             res.end();
@@ -194,7 +193,6 @@ class UserController {
             res.end();
         })
     }
-
 
 }
 

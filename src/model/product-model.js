@@ -14,6 +14,10 @@ class ProductModel extends BaseModel {
         const sql = `SELECT * FROM products`;
         return await this.querySQL(sql);
     }
+    async getWomenShirt(){
+        const sql = `SELECT * FROM products WHERE productCode LIKE '%ANU%'`;
+        return await this.querySQL(sql);
+    }
     async searchProductByName(keywordPro) {
         const sql = `SELECT *
                      FROM products
@@ -48,6 +52,12 @@ class ProductModel extends BaseModel {
         const sql = `SELECT *
                      FROM products
                      WHERE productCode like '%QNU%'`;
+        return await this.querySQL(sql);
+    }
+    async getWomenShirtProducts(){
+        const sql = `SELECT *
+                     FROM products
+                     WHERE productCode like '%ANU%'`;
         return await this.querySQL(sql);
     }
 
