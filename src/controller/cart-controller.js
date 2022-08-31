@@ -50,7 +50,7 @@ class CartController {
                         })
 
 
-                        console.log(cart);
+                        // console.log(cart);
                     } else {
                         let nameFile = Date.now();
                         fs.writeFile('./session/cart/' + nameFile + '.txt', JSON.stringify(cart), function (err) {

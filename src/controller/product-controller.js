@@ -300,10 +300,12 @@ class ProductController {
         if(req.headers.cookie){
             let cookieReq = cookie.parse(req.headers.cookie);
             let cartCookie = cookieReq.cart;
+
             let cartId = JSON.parse(cartCookie).cartId;
             if (fs.existsSync('./session/cart/' + cartId + '.txt')) {
                 let dataCart = fs.readFileSync('./session/cart/' + cartId +'.txt','utf-8');
                 let cart = JSON.parse(dataCart);
+                // console.log(cart)
                 cartTotalQuantity = cart.totalQuantity;
             }
         }
@@ -318,6 +320,60 @@ class ProductController {
             res.write(data);
             res.end();
         })
+    }
+    confirmOrder(req, res) {
+        let cartTotalQuantity = 0;
+        let totalMoney = 0;
+        let products;
+        let html = '';
+        if(req.headers.cookie){
+            let cookieReq = cookie.parse(req.headers.cookie);
+            let cartCookie = cookieReq.cart;
+            let cartId = JSON.parse(cartCookie).cartId;
+            if (fs.existsSync('./session/cart/' + cartId + '.txt')) {
+                let dataCart = fs.readFileSync('./session/cart/' + cartId +'.txt','utf-8');
+                let cart = JSON.parse(dataCart);
+                // console.log(cart)
+                cartTotalQuantity = cart.totalQuantity;
+
+                products = cart.items;
+                console.log(products)
+                products.forEach((item, index) => {
+                    html += `<li class="list-group-item">
+                          <div class="media align-items-lg-center flex-column flex-lg-row p-3">
+                            <div class="media-body order-2 order-lg-1">
+                            <h5 class="mt-0 font-weight-bold mb-2">${item.productName}</h5>
+                            <p class="font-italic text-muted mb-0 small"> ${item.detail}</p>
+                            <div class="d-flex align-items-center justify-content-between mt-1">
+                                <h6 class="font-weight-bold my-2">$ ${item.price}</h6>
+                                <ul class="list-inline small">
+                                    <li class="list-inline-item m-0"><i class="fa fa-star text-success"></i></li>
+                                    <li class="list-inline-item m-0"><i class="fa fa-star text-success"></i></li>
+                                    <li class="list-inline-item m-0"><i class="fa fa-star text-success"></i></li>
+                                    <li class="list-inline-item m-0"><i class="fa fa-star text-success"></i></li>
+                                    <li class="list-inline-item m-0"><i class="fa fa-star text-success"></i></li>
+                                </ul>
+                          
+                            </div>
+                        </div>
+                        <img src="${item.img}" alt="Generic placeholder image" width="200" class="ml-lg-5 order-1 order-lg-2">
+                        </div>
+                       </li>`;
+                    totalMoney += item.price;
+                });
+            }
+        }
+       fs.readFile('./views/confirm-order.html','utf-8', function(err, data){
+           if(err) {
+               console.log(err.message);
+           }
+           data = data.replace('{total-money}', String(totalMoney));
+           data = data.replace('{total-product-cart}', cartTotalQuantity)
+           data = data.replace('{list-ordered-customer}', html);
+           res.writeHead(200, {'Content-Type': 'text/html'})
+           res.write(data);
+           res.end();
+       })
     }
 }
 

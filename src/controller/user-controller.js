@@ -183,11 +183,23 @@ class UserController {
         })
     }
     showHomePage(req, res){
+        let cartTotalQuantity = 0;
+        if(req.headers.cookie){
+            let cookieReq = cookie.parse(req.headers.cookie);
+            let cartCookie = cookieReq.cart;
+            let cartId = JSON.parse(cartCookie).cartId;
+            if (fs.existsSync('./session/cart/' + cartId + '.txt')) {
+                let dataCart = fs.readFileSync('./session/cart/' + cartId +'.txt','utf-8');
+                let cart = JSON.parse(dataCart);
+                cartTotalQuantity = cart.totalQuantity;
+            }
+        }
 
         fs.readFile('./views/home-page.html','utf-8',function(err,data){
             if (err) {
                 console.log(err.message);
             }
+            data = data.replace('{total-product-cart}', String(cartTotalQuantity))
             res.writeHead(200, {'Content-Type': 'text/html'});
             res.write(data);
             res.end();
