@@ -60,7 +60,12 @@ class ProductModel extends BaseModel {
                      WHERE productCode like '%ANU%'`;
         return await this.querySQL(sql);
     }
-
+    async findProductById(id) {
+        const sql = `SELECT *
+                     FROM products
+                     WHERE productNumber = ${id}`;
+        return await this.querySQL(sql);
+    }
 }
 module.exports = ProductModel;
 

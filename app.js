@@ -4,14 +4,17 @@ const PORT = 8000;
 const url = require('url');
 const Controller = require('./src/controller/user-controller')
 const ProductController = require('./src/controller/product-controller')
+const CartController = require("./src/controller/cart-controller");
 
 
 // khởi tạo đối tượng Controller
 let productController = new ProductController();
 let controller = new Controller();
+let cartController = new CartController();
 let mimeTypes = {
     'jpg': 'images/jpg',
     'png': 'images/png',
+    'gid': 'images/gid',
     'js': 'text/javascript',
     'css': 'text/css',
     'svg': 'image/svg+xml',
@@ -127,6 +130,9 @@ const server = http.createServer((req, res) => {
                     productController.showWomenPants(req, res).catch(function (err) {
                         throw new Error(err.message);
                     })
+                break;
+            case '/add-to-cart':
+                cartController.addToCart(req, res)
                 break;
             default:
                 res.end();

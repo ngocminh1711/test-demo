@@ -2,6 +2,7 @@ const ProductModel = require('../model/product-model');
 const fs = require('fs');
 const qs = require('qs');
 const url = require('url');
+const cookie = require("cookie");
 
 
 class ProductController {
@@ -146,8 +147,8 @@ class ProductController {
                                     <li class="list-inline-item m-0"><i class="fa fa-star text-success"></i></li>
                                     <li class="list-inline-item m-0"><i class="fa fa-star text-success"></i></li>
                                 </ul>
-
-                                <button type="button" class="btn bg-cart"><i class="fa fa-cart-plus mr-2"></i> Add to cart</button>d
+  
+                                <button type="button" class="btn bg-cart"><i class="fa fa-cart-plus mr-2"></i> Add to cart</button>
                             </div>
                         </div>
                         <img src="${item.img}" alt="Generic placeholder image" width="200" class="ml-lg-5 order-1 order-lg-2">
@@ -185,6 +186,7 @@ class ProductController {
                                     <li class="list-inline-item m-0"><i class="fa fa-star text-success"></i></li>
                                     <li class="list-inline-item m-0"><i class="fa fa-star text-success"></i></li>
                                 </ul>
+                                <button type="button" class="btn bg-cart"><i class="fa fa-cart-plus mr-2"></i> Add to cart</button>
                             </div>
                         </div>
                         <img src="${item.img}" alt="Generic placeholder image" width="200" class="ml-lg-5 order-1 order-lg-2">
@@ -220,6 +222,7 @@ class ProductController {
                                     <li class="list-inline-item m-0"><i class="fa fa-star text-success"></i></li>
                                     <li class="list-inline-item m-0"><i class="fa fa-star text-success"></i></li>
                                 </ul>
+                                <button type="button" class="btn bg-cart"><i class="fa fa-cart-plus mr-2"></i> Add to cart</button>
                             </div>
                         </div>
                         <img src="${item.img}" alt="Generic placeholder image" width="200" class="ml-lg-5 order-1 order-lg-2">
@@ -234,13 +237,9 @@ class ProductController {
     }
     async showWomenShirt(req, res) {
         let products = await this.productModel.getWomenShirtProducts();
-        fs.readFile('./views/aonu.html', 'utf-8', function (err, data) {
-            if (err) {
-                console.log(err.message);
-            }
-            let html = '';
-            products.forEach((item, index) => {
-                html += `<li class="list-group-item">
+        let html = '';
+        products.forEach((item, index) => {
+            html += `<li class="list-group-item">
                           <div class="media align-items-lg-center flex-column flex-lg-row p-3">
                             <div class="media-body order-2 order-lg-1">
                             <h5 class="mt-0 font-weight-bold mb-2">${item.productName}</h5>
@@ -254,12 +253,30 @@ class ProductController {
                                     <li class="list-inline-item m-0"><i class="fa fa-star text-success"></i></li>
                                     <li class="list-inline-item m-0"><i class="fa fa-star text-success"></i></li>
                                 </ul>
+                                <button onclick="addToCart(${item.productNumber})" type="button" class="btn bg-cart"><i class="fa fa-cart-plus mr-2"></i> Add to cart</button>
                             </div>
                         </div>
                         <img src="${item.img}" alt="Generic placeholder image" width="200" class="ml-lg-5 order-1 order-lg-2">
                         </div>
                        </li>`;
-            });
+        });
+        let cartTotalQuantity = 0;
+        if(req.headers.cookie){
+            let cookieReq = cookie.parse(req.headers.cookie);
+            let cartCookie = cookieReq.cart;
+            let cartId = JSON.parse(cartCookie).cartId;
+            if (fs.existsSync('./session/cart/' + cartId + '.txt')) {
+                let dataCart = fs.readFileSync('./session/cart/' + cartId +'.txt','utf-8');
+                let cart = JSON.parse(dataCart);
+                cartTotalQuantity = cart.totalQuantity;
+            }
+        }
+
+        fs.readFile('./views/aonu.html', 'utf-8', function (err, data) {
+            if (err) {
+                console.log(err.message);
+            }
+            data = data.replace('{total-product-cart}', String(cartTotalQuantity));
             data = data.replace('{list-womens-shirt}', html);
             res.writeHead(200, {'Content-Type': 'text/html'});
             res.write(data);
