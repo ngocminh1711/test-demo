@@ -6,9 +6,11 @@ const Controller = require('./src/controller/user-controller')
 const ProductController = require('./src/controller/product-controller')
 
 
+
 // khởi tạo đối tượng Controller
 let productController = new ProductController();
 let controller = new Controller();
+
 let mimeTypes = {
     'jpg': 'images/jpg',
     'png': 'images/png',
@@ -72,7 +74,6 @@ const server = http.createServer((req, res) => {
                 })
                 break;
             case '/product/search':
-
                 productController.searchProduct(req, res).catch(function (error) {
                     throw new Error(error.message);
                 })
@@ -123,11 +124,13 @@ const server = http.createServer((req, res) => {
                     throw new Error(err.message);
                 })
                 break;
-                case '/pageQuanNu':
-                    productController.showWomenPants(req, res).catch(function (err) {
-                        throw new Error(err.message);
-                    })
+            case '/pageQuanNu':
+                productController.showWomenPants(req, res).catch(function (err) {
+                    throw new Error(err.message);
+                })
                 break;
+
+
             default:
                 res.end();
         }

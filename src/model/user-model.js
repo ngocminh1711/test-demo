@@ -28,7 +28,7 @@ class UserModel extends BaseModel {
     }
 
     async searchUserByName(keyword) {
-        const sql = `SELECT userName, password
+        const sql = `SELECT *
                      FROM users
                      WHERE userName LIKE '%${keyword}%'`;
         return await this.querySQL(sql);

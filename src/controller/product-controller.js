@@ -102,7 +102,7 @@ class ProductController {
     }
 
     showFormUpdate(req, res) {
-        fs.readFile('./views/updateProduct.html', 'utf8', function (err, data) {
+        fs.readFile('./views/update/updateProduct.html', 'utf8', function (err, data) {
             if (err) {
                 console.log(err.message);
             }
@@ -124,21 +124,21 @@ class ProductController {
         })
     }
 
-    async showMenShirt(req, res){
+    async showMenShirt(req, res) {
         let products = await this.productModel.getMenShirtProducts();
-        fs.readFile('./views/pageAoNam.html','utf-8',function(err,data){
+        fs.readFile('./views/page/pageAoNam.html', 'utf-8', function (err, data) {
             if (err) {
                 console.log(err.message);
             }
-            let html='';
-            products.forEach((item,index) => {
+            let html = '';
+            products.forEach((item, index) => {
                 html += `<li class="list-group-item">
                           <div class="media align-items-lg-center flex-column flex-lg-row p-3">
                             <div class="media-body order-2 order-lg-1">
                             <h5 class="mt-0 font-weight-bold mb-2">${item.productName}</h5>
                             <p class="font-italic text-muted mb-0 small"> ${item.detail}</p>
                             <div class="d-flex align-items-center justify-content-between mt-1">
-                                <h6 class="font-weight-bold my-2">$ ${item.price}</h6>
+                                <h6 class="font-weight-bold my-2">${item.price} đ</h6>
                                 <ul class="list-inline small">
                                     <li class="list-inline-item m-0"><i class="fa fa-star text-success"></i></li>
                                     <li class="list-inline-item m-0"><i class="fa fa-star text-success"></i></li>
@@ -147,14 +147,13 @@ class ProductController {
                                     <li class="list-inline-item m-0"><i class="fa fa-star text-success"></i></li>
                                 </ul>
 
-                                <button type="button" class="btn bg-cart"><i class="fa fa-cart-plus mr-2"></i> Add to cart</button>d
+                                <button type="button"  class="btn bg-cart"><i class="fa fa-cart-plus mr-2"></i> Add to cart</button>
                             </div>
                         </div>
                         <img src="${item.img}" alt="Generic placeholder image" width="200" class="ml-lg-5 order-1 order-lg-2">
                         </div>
                        </li>`;
             });
-            data = data.replace('{list-womens-shirt}', html);
 
             data = data.replace('{list-menShirt}', html);
             res.writeHead(200, {'Content-Type': 'text/html'});
@@ -163,21 +162,22 @@ class ProductController {
         })
 
     }
-    async showMenPants(req, res){
+
+    async showMenPants(req, res) {
         let products = await this.productModel.getMenPantsProducts();
-        fs.readFile('./views/pageQuanNam.html','utf-8',function(err,data){
+        fs.readFile('./views/page/pageQuanNam.html', 'utf-8', function (err, data) {
             if (err) {
                 console.log(err.message);
             }
-            let html='';
-            products.forEach((item,index) => {
+            let html = '';
+            products.forEach((item, index) => {
                 html += `<li class="list-group-item">
                           <div class="media align-items-lg-center flex-column flex-lg-row p-3">
                             <div class="media-body order-2 order-lg-1">
                             <h5 class="mt-0 font-weight-bold mb-2">${item.productName}</h5>
                             <p class="font-italic text-muted mb-0 small"> ${item.detail}</p>
                             <div class="d-flex align-items-center justify-content-between mt-1">
-                                <h6 class="font-weight-bold my-2">$ ${item.price}</h6>
+                                <h6 class="font-weight-bold my-2">${item.price} đ</h6>
                                 <ul class="list-inline small">
                                     <li class="list-inline-item m-0"><i class="fa fa-star text-success"></i></li>
                                     <li class="list-inline-item m-0"><i class="fa fa-star text-success"></i></li>
@@ -185,6 +185,7 @@ class ProductController {
                                     <li class="list-inline-item m-0"><i class="fa fa-star text-success"></i></li>
                                     <li class="list-inline-item m-0"><i class="fa fa-star text-success"></i></li>
                                 </ul>
+                                <button type="button" class="btn bg-cart"><i class="fa fa-cart-plus mr-2"></i> Add to cart</button>
                             </div>
                         </div>
                         <img src="${item.img}" alt="Generic placeholder image" width="200" class="ml-lg-5 order-1 order-lg-2">
@@ -198,21 +199,22 @@ class ProductController {
         })
 
     }
+
     async showWomenPants(req, res) {
         let products = await this.productModel.getWomenPantsProducts();
-        fs.readFile('./views/pageQuanNu.html','utf-8',function(err,data){
+        fs.readFile('./views/page/pageQuanNu.html', 'utf-8', function (err, data) {
             if (err) {
                 console.log(err.message);
             }
-            let html='';
-            products.forEach((item,index) => {
+            let html = '';
+            products.forEach((item, index) => {
                 html += `<li class="list-group-item">
                           <div class="media align-items-lg-center flex-column flex-lg-row p-3">
                             <div class="media-body order-2 order-lg-1">
                             <h5 class="mt-0 font-weight-bold mb-2">${item.productName}</h5>
                             <p class="font-italic text-muted mb-0 small"> ${item.detail}</p>
                             <div class="d-flex align-items-center justify-content-between mt-1">
-                                <h6 class="font-weight-bold my-2">$ ${item.price}</h6>
+                                <h6 class="font-weight-bold my-2">${item.price} đ</h6>
                                 <ul class="list-inline small">
                                     <li class="list-inline-item m-0"><i class="fa fa-star text-success"></i></li>
                                     <li class="list-inline-item m-0"><i class="fa fa-star text-success"></i></li>
@@ -220,6 +222,7 @@ class ProductController {
                                     <li class="list-inline-item m-0"><i class="fa fa-star text-success"></i></li>
                                     <li class="list-inline-item m-0"><i class="fa fa-star text-success"></i></li>
                                 </ul>
+                                <button type="button" class="btn bg-cart"><i class="fa fa-cart-plus mr-2"></i> Add to cart</button>
                             </div>
                         </div>
                         <img src="${item.img}" alt="Generic placeholder image" width="200" class="ml-lg-5 order-1 order-lg-2">
@@ -232,9 +235,10 @@ class ProductController {
             res.end();
         })
     }
+
     async showWomenShirt(req, res) {
         let products = await this.productModel.getWomenShirtProducts();
-        fs.readFile('./views/aonu.html', 'utf-8', function (err, data) {
+        fs.readFile('./views/page/aonu.html', 'utf-8', function (err, data) {
             if (err) {
                 console.log(err.message);
             }
@@ -246,7 +250,7 @@ class ProductController {
                             <h5 class="mt-0 font-weight-bold mb-2">${item.productName}</h5>
                             <p class="font-italic text-muted mb-0 small"> ${item.detail}</p>
                             <div class="d-flex align-items-center justify-content-between mt-1">
-                                <h6 class="font-weight-bold my-2">$ ${item.price}</h6>
+                                <h6 class="font-weight-bold my-2">${item.price} đ</h6>
                                 <ul class="list-inline small">
                                     <li class="list-inline-item m-0"><i class="fa fa-star text-success"></i></li>
                                     <li class="list-inline-item m-0"><i class="fa fa-star text-success"></i></li>
@@ -254,6 +258,7 @@ class ProductController {
                                     <li class="list-inline-item m-0"><i class="fa fa-star text-success"></i></li>
                                     <li class="list-inline-item m-0"><i class="fa fa-star text-success"></i></li>
                                 </ul>
+                                <button type="button" class="btn bg-cart"><i class="fa fa-cart-plus mr-2"></i> Add to cart</button>
                             </div>
                         </div>
                         <img src="${item.img}" alt="Generic placeholder image" width="200" class="ml-lg-5 order-1 order-lg-2">
@@ -266,6 +271,7 @@ class ProductController {
             res.end();
         })
     }
+
 }
 
 module.exports = ProductController;

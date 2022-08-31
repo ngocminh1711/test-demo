@@ -4,7 +4,7 @@ const BaseModel = require('../model/base-Model');
 class ProductModel extends BaseModel {
 
     async createNewProduct(data) {
-        const sql = `INSERT INTO products (casestudy.products.productName, amount, price, detail, casestudy.products.productCode) VALUES ('${data.newNamePro}', '${data.newAmount}', '${data.newPrice}', '${data.newDetail}','${data.newProductCode}');`
+        const sql = `INSERT INTO products (casestudy.products.productName, amount, price, detail, casestudy.products.productCode,casestudy.products.img) VALUES ('${data.newNamePro}', '${data.newAmount}', '${data.newPrice}', '${data.newDetail}','${data.newProductCode}','${data.newImage}');`
         return await this.querySQL(sql);
 
     }
@@ -14,10 +14,8 @@ class ProductModel extends BaseModel {
         const sql = `SELECT * FROM products`;
         return await this.querySQL(sql);
     }
-    async getWomenShirt(){
-        const sql = `SELECT * FROM products WHERE productCode LIKE '%ANU%'`;
-        return await this.querySQL(sql);
-    }
+
+
     async searchProductByName(keywordPro) {
         const sql = `SELECT *
                      FROM products
@@ -31,7 +29,7 @@ class ProductModel extends BaseModel {
     }
     async updateProduct(data,index) {
         const sql = `UPDATE products
-                     SET productName = '${data.nameProUpdate}',amount = '${data.amountProUpdate}',price = '${data.priceProUpdate}', detail = '${data.detailProUpdate}',productCode = '${data.productCodeProUpdate}'
+                     SET productName = '${data.nameProUpdate}',amount = '${data.amountProUpdate}',price = '${data.priceProUpdate}', detail = '${data.detailProUpdate}',productCode = '${data.productCodeProUpdate}',img = '${data.imgProUpdate}'
                      WHERE productNumber = '${index}';`
         return await this.querySQL(sql);
     }

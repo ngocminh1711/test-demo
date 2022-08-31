@@ -15,10 +15,17 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/js/bootstrap.min.js"
             integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
             crossorigin="anonymous"></script>
+    <head>
+        <style>
+            body{
+                background-image: url('https://img6.thuthuatphanmem.vn/uploads/2022/04/19/background-cua-hang-thoi-trang_044559593.jpg');
+            }
+        </style>
 </head>
 <body>
 
 <div class="container">
+    <h2> Create Product</h2><br>
     <div class="col-xl-9 col-lg-9 col-md-12 col-sm-12 col-12">
         <div class="card h-100">
             <form action="/createProduct" method="POST">
@@ -29,13 +36,13 @@
                         <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
                             <div class="form-group">
                                 <label>Product Name</label>
-                                <input type="text" class="form-control" name="newNamePro" placeholder="Enter Product Name">
+                                <input type="text" class="form-control" name="newNamePro" placeholder="Enter Product Name" required>
                             </div>
                         </div>
                         <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
                             <div class="form-group">
                                 <label>Amount</label>
-                                <input type="number" class="form-control" name="newAmount" placeholder="Enter Amount">
+                                <input type="number" class="form-control" name="newAmount" placeholder="Enter Amount" required>
                             </div>
                         </div>
                     </div>
@@ -46,19 +53,25 @@
                         <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
                             <div class="form-group">
                                 <label>Price</label>
-                                <input type="number" name ="newPrice" class="form-control" placeholder="Enter Price">
+                                <input type="number" name ="newPrice" class="form-control" placeholder="Enter Price" required>
                             </div>
                         </div>
                         <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
                             <div class="form-group">
                                 <label>Detail</label>
-                                <input type="text" name="newDetail" class="form-control" placeholder="Enter Detail">
+                                <input type="text" name="newDetail" class="form-control" placeholder="Enter Detail" required>
                             </div>
                         </div>
                         <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
                             <div class="form-group">
                                 <label>Product Code</label>
-                                <input type="text" name="newProductCode" class="form-control" placeholder="Enter Product Code">
+                                <input type="text" name="newProductCode" class="form-control" placeholder="Enter Product Code" required>
+                            </div>
+                        </div>
+                        <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
+                            <div class="form-group">
+                                <label>Image</label>
+                                <input type="text" name="newImage" class="form-control" placeholder="Enter Image Source" required>
                             </div>
                         </div>
                     </div>
@@ -78,6 +91,6 @@
     </div>
 </div>
 </div>
-<h6>deo tin được</h6>
+
 </body>
 </html>
