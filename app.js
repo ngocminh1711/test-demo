@@ -141,7 +141,6 @@ const server = http.createServer((req, res) => {
                 res.end();
         }
     }
-
 })
 server.listen(PORT, () => {
     console.log(` http://localhost:${PORT}/homepage`);

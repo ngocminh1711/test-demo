@@ -135,7 +135,7 @@ class ProductController {
                             <h5 class="mt-0 font-weight-bold mb-2">${item.productName}</h5>
                             <p class="font-italic text-muted mb-0 small"> ${item.detail}</p>
                             <div class="d-flex align-items-center justify-content-between mt-1">
-                                <h6 class="font-weight-bold my-2">$ ${item.price}</h6>
+                                <h6 class="font-weight-bold my-2">${item.price} vnđ</h6>
                                 <ul class="list-inline small">
                                     <li class="list-inline-item m-0"><i class="fa fa-star text-success"></i></li>
                                     <li class="list-inline-item m-0"><i class="fa fa-star text-success"></i></li>
@@ -184,7 +184,7 @@ class ProductController {
                             <h5 class="mt-0 font-weight-bold mb-2">${item.productName}</h5>
                             <p class="font-italic text-muted mb-0 small"> ${item.detail}</p>
                             <div class="d-flex align-items-center justify-content-between mt-1">
-                                <h6 class="font-weight-bold my-2">$ ${item.price}</h6>
+                                <h6 class="font-weight-bold my-2">${item.price} vnđ</h6>
                                 <ul class="list-inline small">
                                     <li class="list-inline-item m-0"><i class="fa fa-star text-success"></i></li>
                                     <li class="list-inline-item m-0"><i class="fa fa-star text-success"></i></li>
@@ -233,7 +233,7 @@ class ProductController {
                             <h5 class="mt-0 font-weight-bold mb-2">${item.productName}</h5>
                             <p class="font-italic text-muted mb-0 small"> ${item.detail}</p>
                             <div class="d-flex align-items-center justify-content-between mt-1">
-                                <h6 class="font-weight-bold my-2">$ ${item.price}</h6>
+                                <h6 class="font-weight-bold my-2">${item.price} vnđ</h6>
                                 <ul class="list-inline small">
                                     <li class="list-inline-item m-0"><i class="fa fa-star text-success"></i></li>
                                     <li class="list-inline-item m-0"><i class="fa fa-star text-success"></i></li>
@@ -281,7 +281,7 @@ class ProductController {
                             <h5 class="mt-0 font-weight-bold mb-2">${item.productName}</h5>
                             <p class="font-italic text-muted mb-0 small"> ${item.detail}</p>
                             <div class="d-flex align-items-center justify-content-between mt-1">
-                                <h6 class="font-weight-bold my-2">$ ${item.price}</h6>
+                                <h6 class="font-weight-bold my-2">${item.price} vnđ</h6>
                                 <ul class="list-inline small">
                                     <li class="list-inline-item m-0"><i class="fa fa-star text-success"></i></li>
                                     <li class="list-inline-item m-0"><i class="fa fa-star text-success"></i></li>
@@ -345,7 +345,7 @@ class ProductController {
                             <h5 class="mt-0 font-weight-bold mb-2">${item.productName}</h5>
                             <p class="font-italic text-muted mb-0 small"> ${item.detail}</p>
                             <div class="d-flex align-items-center justify-content-between mt-1">
-                                <h6 class="font-weight-bold my-2">$ ${item.price}</h6>
+                                <h6 class="font-weight-bold my-2">${item.price} vnđ</h6>
                                 <ul class="list-inline small">
                                     <li class="list-inline-item m-0"><button type="button" class="btn btn-danger"> Delete</button></li>
                                     
