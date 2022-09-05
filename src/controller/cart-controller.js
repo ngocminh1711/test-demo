@@ -27,15 +27,15 @@ class CartController {
                 totalQuantity: 1
             }
 
-            // console.log(cookieReq)
+
 
             if (req.headers.cookie) {
                 let cookieReq = cookie.parse(req.headers.cookie);
                 if (cookieReq) {
                     let cartCookie = cookieReq.cart;
-                    // console.log(cartCookie);
+
                     let cartId = JSON.parse(cartCookie).cartId;
-                    // console.log(cartId);
+
                     // file exitst
                     if (fs.existsSync('./session/cart/' + cartId + '.txt')) {
 
@@ -50,7 +50,7 @@ class CartController {
                         })
 
 
-                        // console.log(cart);
+
                     } else {
                         let nameFile = Date.now();
                         fs.writeFile('./session/cart/' + nameFile + '.txt', JSON.stringify(cart), function (err) {
@@ -81,6 +81,26 @@ class CartController {
                 })
             }
         })
+    }
+    deleteCart(req, res) {
+        let data = '';
+        req.on('data', function (chunk) {
+            data += chunk;
+        })
+        req.on('end', async () => {
+            let dataBody = qs.parse(data);
+            let idProduct = dataBody.idProduct;
+            let product = await this.productModel.findProductById(idProduct);
+            // console.log(product.items);
+
+            let cookieReq = cookie.parse(req.headers.cookie);
+            console.log(cookieReq)
+            let cartCookie = cookieReq.cart;
+            // let cartId = JSON.parse(cartCookie).cartId;
+            console.log(cartCookie)
+
+
+    })
     }
 }
 

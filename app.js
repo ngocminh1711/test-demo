@@ -137,6 +137,9 @@ const server = http.createServer((req, res) => {
             case '/confirm-order':
                 productController.confirmOrder(req, res)
                 break;
+            case '/delete-cart':
+                cartController.deleteCart(req, res)
+                break;
             default:
                 res.end();
         }

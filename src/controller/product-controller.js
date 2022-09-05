@@ -49,7 +49,7 @@ class ProductController {
                 showHtml += `<td>${product.price}</td>`
                 showHtml += `<td>${product.detail}</td>`
                 showHtml += `<td>${product.productCode}</td>`
-                showHtml += `<td><a href="/deleteProduct?index=${product.productNumber}" class="btn btn-danger">Delete</a></td>`
+                showHtml += `<td><a onclick="confirm('Are you sure you want to delete this product?')" href="/deleteProduct?index=${product.productNumber}" class="btn btn-danger">Delete</a></td>`
                 showHtml += `<td><a href="/updateProduct?index=${product.productNumber}" class="btn btn-primary">Update</a></td>`
                 showHtml += `<tr>`
             });
@@ -74,7 +74,7 @@ class ProductController {
                 html += `<td>${product.price}</td>`
                 html += `<td>${product.detail}</td>`
                 html += `<td>${product.productCode}</td>`
-                html += `<td><a href="/deleteProduct?index=${product.productNumber}" class="btn btn-danger">Delete</a></td>`
+                html += `<td><a onclick="confirm('Are you sure you want to delete this product?'" href="/deleteProduct?index=${product.productNumber}" class="btn btn-danger">Delete</a></td>`
                 html += `<td><a href="/updateProduct?index=${product.productNumber}" class="btn-primary">Update</a></td>`
                 html += `</tr>`
             })
@@ -347,9 +347,9 @@ class ProductController {
                             <div class="d-flex align-items-center justify-content-between mt-1">
                                 <h6 class="font-weight-bold my-2">${item.price} vnđ</h6>
                                 <ul class="list-inline small">
-                                    <li class="list-inline-item m-0"><button type="button" class="btn btn-danger"> Delete</button></li>
+                                    <li class="list-inline-item m-0"><button onclick="deleteCart(${index})" n type="button" class="btn btn-danger"> Delete</button></li>
                                     
-                                    
+                                 
                                 </ul>
                           
                             </div>

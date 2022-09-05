@@ -18,3 +18,18 @@ function addToCart(idProduct) {
         }
     })
 }
+function deleteCart(){
+    $.ajax({
+        url: `${original}/delete-cart`,
+        method: 'POST',
+        headers: {
+            cookie: document.cookie
+        },
+        data: {
+            id: id
+        },
+        success: (res) => {
+            $('#total-product-cart').html(res)
+        }
+    })
+}

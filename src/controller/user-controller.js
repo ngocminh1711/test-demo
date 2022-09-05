@@ -32,7 +32,7 @@ class UserController {
                 html += `<td>${user.phone}</td>`;
                 html += `<td>${user.city}</td>`;
                 html += `<td>${user.state}</td>`;
-                html += `<td><a href="/deleteUser?index=${user.id}" class="btn btn-danger">Delete</a></td>`;
+                html += `<td><a onclick="confirm('Are you sure you want to delete this user?')" href="/deleteUser?index=${user.id}" class="btn btn-danger">Delete</a></td>`;
                 html += `<td><a href="/updateUser?index=${user.id}" class="btn btn-primary">Update</a></td>`;
                 html += `<tr>`
             })
